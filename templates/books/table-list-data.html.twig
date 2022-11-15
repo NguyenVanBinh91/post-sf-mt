@@ -1,0 +1,17 @@
+{% for book in books %}
+  <tr>
+    <td>{{book.id}}</td>
+    <td><a href="{{ path('books.detail',{id:book.id}) }}">{{book.title}}</a></td>
+    <td>{{book.descretion}}</td>
+    <td><image src="{{ asset('images/brochures/' ~ book.image) }}" style="width: 50px;height: 50px;"/></td>
+    <td>{{book.content}}</td>
+    <td>{{book.keywords}}</td>
+    <td>{{book.tags}}</td>
+    <td>{{book.category}}</td>
+    <td>{{book.status}}</td>
+    <td>
+        <a href="{{ path('books.edit',{id:book.id}) }}" class="btn btn-info">Edit</a> 
+        <a href="{{ path('books.delete',{id:book.id}) }}" class="btn btn-danger">Delete</a> 
+    </td>
+  </tr>
+{% endfor %}

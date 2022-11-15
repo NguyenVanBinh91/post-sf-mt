@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+{% block title %}List Books{% endblock %}
+{% block body %}
+     <nav class="navbar navbar-expand-lg navbar-light bg-light"  style="background-color: #9A616D;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">List Books</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Content</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="vh-100">
+    <div class="container py-5 h-100">
+    <h2>List Books</h2>
+    <div class="row">
+    <div class="d-flex">
+      <form class="d-flex w-50" id="search_form">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="searchbook" id="searchbook">
+        <button id="btn-search" class="btn btn-outline-success" type="button">Search</button>
+      </form>
+      <a href="{{ path('books.create') }}" class="btn btn-outline-primary float-end">Create New Book</a>
+    </div>
+        
+    </div><br>
+   
+    <div class="row">
+      <table class="table table-bordered table-striped center">
+        <thead>
+          <tr>
+            <th scope="col" style="text-align: center;">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Descretion</th>
+            <th scope="col">Image</th>
+            <th scope="col">Content</th>
+            <th scope="col">Keywords</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col" style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="table-list-data">
+        {% for book in books %}
+          <tr>
+            <td>{{book.id}}</td>
+            <td><a href="{{ path('books.detail',{id:book.id}) }}">{{book.title}}</a></td>
+            <td>{{book.descretion}}</td>
+            <td><image src="{{ asset('images/brochures/' ~ book.image) }}" style="width: 50px;height: 50px;"/></td>
+            <td>{{book.content}}</td>
+            <td>{{book.keywords}}</td>
+            <td>{{book.tags}}</td>
+            <td>{{book.category}}</td>
+            <td>{{book.status}}</td>
+            <td>
+                <a href="{{ path('books.edit',{id:book.id}) }}" class="btn btn-info">Edit</a> 
+                <a href="{{ path('books.delete',{id:book.id}) }}" class="btn btn-danger">Delete</a> 
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </section>
+  <script>
+    $(document).ready(function(){
+      $("#btn-search").click(function(e) {
+        e.preventDefault();
+        var actionurl = e.currentTarget;
+        var searchbook = $('#searchbook').val();       
+        $.ajax({
+            url : "/books/list",
+            type : "post",
+            dataType:"text",
+            data : {
+              searchbook : searchbook
+            },
+            success : function (result){
+              $('#table-list-data').html(result);
+                //$('#table-list-data').html(result);
+            }
+        });
+      });
+      
+    });
+  </script>
+{% endblock %}

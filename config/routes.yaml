@@ -1,0 +1,11 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+# show_number:
+#     path: /books/number
+#     controller: App\Controller\BooksController::number
+#     methods:    GET|HEAD
+# show_detail:
+#     path: /books/detail
+#     controller: App\Controller\BooksController::detail
+#     methods:    GET
